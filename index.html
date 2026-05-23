@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет-магазин</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .product { background: #f0f0f0; margin: 10px 0; padding: 15px; }
+        .price { color: green; font-weight: bold; }
+        nav a { margin-right: 15px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'index' %}">Главная</a>
+        <a href="{% url 'products' %}">Товары</a>
+        <a href="{% url 'orders' %}">Заказы</a>
+    </nav>
+    <h1>Добро пожаловать!</h1>
+    <h2>Последние товары</h2>
+    {% for product in products|slice:":3" %}
+    <div class="product">
+        <strong>{{ product.name }}</strong><br>
+        Артикул: {{ product.sku }}<br>
+        <span class="price">{{ product.price }} ₽</span>
+    </div>
+    {% endfor %}
+</body>
+</html>

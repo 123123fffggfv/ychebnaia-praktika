@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .order { background: #f0f0f0; margin: 10px 0; padding: 15px; }
+        .status-new { color: blue; }
+        .status-shipping { color: orange; }
+        .status-delivered { color: green; }
+        nav a { margin-right: 15px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'index' %}">Главная</a>
+        <a href="{% url 'products' %}">Товары</a>
+        <a href="{% url 'orders' %}">Заказы</a>
+    </nav>
+    <h1>Список заказов</h1>
+    {% for order in orders %}
+    <div class="order">
+        <strong>Заказ №{{ order.order_number }}</strong><br>
+        Клиент: {{ order.customer_name }}<br>
+        Сумма: {{ order.total_amount }} ₽<br>
+        Статус:
+        <span class="status-{{ order.status }}">
+            {% if order.status == 'new' %}Новый
+            {% elif order.status == 'shipping' %}В доставке
+            {% elif order.status == 'delivered' %}Доставлен
+            {% endif %}
+        </span><br>
+        Дата: {{ order.created_at|date:"d.m.Y" }}
+    </div>
+    {% endfor %}
+</body>
+</html>

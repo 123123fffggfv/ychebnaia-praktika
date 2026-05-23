@@ -1,0 +1,39 @@
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Товары</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 10px; }
+        th { background: #f0f0f0; }
+        .stock-low { color: red; font-weight: bold; }
+        nav a { margin-right: 15px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'index' %}">Главная</a>
+        <a href="{% url 'products' %}">Товары</a>
+        <a href="{% url 'orders' %}">Заказы</a>
+    </nav>
+    <h1>Каталог товаров</h1>
+    <table>
+        <tr><th>ID</th><th>Название</th><th>Артикул</th><th>Цена</th><th>Остаток</th></tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.sku }}</td>
+            <td>{{ product.price }} ₽</td>
+            <td class="{% if stock_data|get_item:product.id < 5 %}stock-low{% endif %}">
+                {{ stock_data|get_item:product.id }} шт.
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
